@@ -1,6 +1,6 @@
 # Youtube Video Summarizer
 
-This project uses **Youtube Data API** to get the full transcript of the video. Then it employs **OpenAI API** to make a summary of the transcript with the *gpt-3.5-turbo* language model. For a given video, it will summarize all its content into aproximatelly 100 words.
+This project uses **YouTube Data API** to get the full transcript of the video. Then it employs **OpenAI API** to make a summary of the transcript with the *gpt-3.5-turbo* language model. For a given video, it will summarize all its content into approximatelly 100 words.
 
 ## How to use
 
@@ -13,9 +13,9 @@ The request **MUST CONTAIN** in its body the pair "video_url": "VIDEO_URL_TO_SUM
 ## Usage and quotas limitations
 <ul>
     <li>By now the project is reliant on free server hosting, thus the first request will take a minute to start the cold server.</li>
-    <li>OpenAI API is quite generous with its free tier, allowing us to summarize aproximatelly 60 hours of video per month.</li>
-    <li>Youtube Data API is practically unlimited for any non abusive usage.</li>
-    <li>The summarizer works better in speach based videos.</li>
+    <li>OpenAI API is quite generous with its free tier, allowing us to summarize approximatelly 60 hours of video per month.</li>
+    <li>YouTube Data API is practically unlimited for any non-abusive usage.</li>
+    <li>The summarizer works better in speech based videos.</li>
     <li>Extremely long videos are hard to condense into 100 words, so it is recommended to only summarize videos that are 45 minutes long or less.</li>
 </ul>
 
