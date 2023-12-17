@@ -17,10 +17,9 @@ app.get('/ping', (_req, res) => {
 
 app.get('/test/chatgpt', (_req, res) => {
     openai.chat.completions.create({
-        messages: [{ role: "system", content: "Me puedes explicar la diferencia entre materiales ferromagneticos y paramagneticos?" }],
+        messages: [{ role: "system", content: "Me puedes explicar que es una API?" }],
         model: "gpt-3.5-turbo",
     }).then((response)=>res.send(response.choices[0]).status(200)).catch((e)=>{console.log(e);res.send("error").status(400)})
-    
 })
 
 app.get('/api/summarize', (req, res) => {
