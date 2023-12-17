@@ -5,7 +5,7 @@ This project uses **Youtube Data API** to get the full transcript of the video. 
 ## How to use
 
 ### HTTP request
-> GET <span>https://youtube-video-summarizer-2ach.onrender.com/api/summarize</span>
+> GET https://youtube-video-summarizer-2ach.onrender.com/api/summarize
 
 ### Body
 The request **MUST CONTAIN** in its body the pair "video_url": "VIDEO_URL_TO_SUMMARIZE"
@@ -16,6 +16,6 @@ The request **MUST CONTAIN** in its body the pair "video_url": "VIDEO_URL_TO_SUM
     <li>OpenAI API is quite generous with its free tier, allowing us to summarize aproximatelly 60 hours of video per month.</li>
     <li>Youtube Data API is practically unlimited for any non abusive usage.</li>
     <li>The summarizer works better in speach based videos.</li>
-    <li>Extremely long videos are hard to condense into 100 words, so it is recommended to only summarize videos that are not more than 45 minutes long.</li>
+    <li>Extremely long videos are hard to condense into 100 words, so it is recommended to only summarize videos that are 45 minutes long or less.</li>
 </ul>
 
