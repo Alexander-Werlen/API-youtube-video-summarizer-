@@ -55,7 +55,7 @@ app.get('/api/summarize', (req, res) => {
                 responseJson.found_summary=true;
                 responseJson.summary=response.choices[0].message.content || "";
                 res.send(responseJson).status(200)})
-        })
+        }).catch((e)=>{console.log(e);res.send(responseJson).status(400)})
     }).catch((e)=>{console.log(e);res.send(responseJson).status(400)})
 })
 
