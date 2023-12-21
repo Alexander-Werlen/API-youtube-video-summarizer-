@@ -31,6 +31,7 @@ app.get('/api/summarize', (req, res) => {
         id_is_valid: false,
         found_transcript: false,
         found_summary: false,
+        had_to_reduce_length: false,
         summary: ""
     };
 
@@ -55,7 +56,11 @@ app.get('/api/summarize', (req, res) => {
             responseJson.found_transcript=true;
             return subtitles.map((subtitle_entry)=> subtitle_entry.text).join(" ")
             }
-        ).then((transcript)=>{
+        ).then((transcript: string)=>{
+            if(transcript.length>18000){
+                responseJson.had_to_reduce_length=true;
+                transcript=transcript.slice(0,18000);
+            }
             let prompt_start = "I will give you a text that comes from the transcript of a youtube video, describe in english and in less than 100 words what are the main topics covered in the video. The transcript text is the following: "
             openai.chat.completions.create({
             messages: [{ role: "system", content: prompt_start+transcript }],
