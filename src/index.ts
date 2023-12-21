@@ -56,7 +56,7 @@ app.get('/api/summarize', (req, res) => {
             return subtitles.map((subtitle_entry)=> subtitle_entry.text).join(" ")
             }
         ).then((transcript)=>{
-            let prompt_start = "I will give you a text that comes from the transcript of a youtube video, describe in english and in less than 100 words what are the main topics covered in the text. The transcript text is the following: "
+            let prompt_start = "I will give you a text that comes from the transcript of a youtube video, describe in english and in less than 100 words what are the main topics covered in the video. The transcript text is the following: "
             openai.chat.completions.create({
             messages: [{ role: "system", content: prompt_start+transcript }],
             model: "gpt-3.5-turbo",}).then((response)=>{
