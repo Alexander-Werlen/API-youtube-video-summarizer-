@@ -3,13 +3,22 @@ import axios from 'axios';
 import { YoutubeTranscript } from 'youtube-transcript';
 import OpenAI from "openai";
 require("dotenv").config()
+const cors=require("cors");
 
 const PORT = process.env.PORT || 3000
+
+const corsOptions ={
+    origin:'*', 
+    credentials:true,
+    optionSuccessStatus:200,
+}
 
 const openai = new OpenAI();
 
 const app = express()
-app.use(express.json()) 
+
+app.use(express.json())
+app.use(cors(corsOptions))
 
 app.get('/ping', (_req, res) => {
     console.log("Alguien hizo ping")
