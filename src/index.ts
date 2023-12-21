@@ -9,7 +9,6 @@ const PORT = process.env.PORT || 3000
 
 const corsOptions ={
     origin:'*', 
-    credentials:true,
     optionSuccessStatus:200,
 }
 
