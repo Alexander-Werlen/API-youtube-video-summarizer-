@@ -13,7 +13,7 @@ app.use(express.json())
 
 app.get('/ping', (_req, res) => {
     console.log("Alguien hizo ping")
-    res.send("pong")
+    res.send("version: 21/12/2023")
 })
 
 app.get('/api/summarize', (req, res) => {
