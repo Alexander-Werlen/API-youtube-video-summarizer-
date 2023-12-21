@@ -1,4 +1,5 @@
 import express from "express"
+import axios from 'axios';
 import { YoutubeTranscript } from 'youtube-transcript';
 import OpenAI from "openai";
 require("dotenv").config()
@@ -15,25 +16,47 @@ app.get('/ping', (_req, res) => {
     res.send("pong")
 })
 
-app.get('/test/chatgpt', (_req, res) => {
-    openai.chat.completions.create({
-        messages: [{ role: "system", content: "Me puedes explicar que es una API?" }],
-        model: "gpt-3.5-turbo",
-    }).then((response)=>res.send(response.choices[0]).status(200)).catch((e)=>{console.log(e);res.send("error").status(400)})
-})
-
 app.get('/api/summarize', (req, res) => {
-    let video_url = req.body.video_url
+    console.log("GET summarize requested")
+    const video_id:string | null = <string>req.query.id || "";
+    let responseJson = {
+        id_is_valid: false,
+        found_transcript: false,
+        found_summary: false,
+        summary: ""
+    };
 
-    YoutubeTranscript.fetchTranscript(video_url).then((subtitles) => {
-            return subtitles.map((subtitle_entry)=> subtitle_entry.text).join(" ")
+    //checking if video exists
+    axios.get('https://www.googleapis.com/youtube/v3/videos', {
+        params: {
+            part: "id",
+            id: video_id,
+            key: process.env.YOUTUBE_DATA_API_KEY
         }
-    ).then((transcript)=>{
-        let prompt_start = "Te dare un texto que proviene de la transcripcion de un video de youtube, describe en menos de 100 palabras cuales son los principales temas tratados en el texto. El texto transcripto del video es el siguiente: "
-        openai.chat.completions.create({
-        messages: [{ role: "system", content: prompt_start+transcript }],
-        model: "gpt-3.5-turbo",}).then((response)=>res.send(response.choices[0].message.content).status(200))
-    }).catch((e)=>{console.log(e);res.send("Error").status(400)})
+    })
+    .then((response) => {
+        const found_vid = response.data.pageInfo.totalResults;
+        if(found_vid==0){
+            throw Error("Video doesnt exists");
+        }else{
+            responseJson.id_is_valid=true;
+        }
+    }).then(()=>{
+        //getting transcript
+        YoutubeTranscript.fetchTranscript(video_id).then((subtitles) => {
+            responseJson.found_transcript=true;
+            return subtitles.map((subtitle_entry)=> subtitle_entry.text).join(" ")
+            }
+        ).then((transcript)=>{
+            let prompt_start = "I will give you a text that comes from the transcript of a youtube video, describe in english and in less than 100 words what are the main topics covered in the text. The transcript text is the following: "
+            openai.chat.completions.create({
+            messages: [{ role: "system", content: prompt_start+transcript }],
+            model: "gpt-3.5-turbo",}).then((response)=>{
+                responseJson.found_summary=true;
+                responseJson.summary=response.choices[0].message.content || "";
+                res.send(responseJson).status(200)})
+        })
+    }).catch((e)=>{console.log(e);res.send(responseJson).status(400)})
 })
 
 app.listen(PORT, () => {
