@@ -5,12 +5,12 @@ This project uses **YouTube Data API** to get the full transcript of the video. 
 ## How to use
 
 ### HTTP request
-> GET https://youtube-video-summarizer-2ach.onrender.com/api/summarize
+> GET https://youtube-summarizer-vf81.onrender.com/api/summarize
 
 ### Params
 The request **MUST CONTAIN** as a parameter the id of the video.
 
 ### Example
-https://youtube-video-summarizer-2ach.onrender.com/api/summarize?id=xKxrkht7CpY
+https://youtube-summarizer-vf81.onrender.com/api/summarize?id=xKxrkht7CpY
 
 
