@@ -53,6 +53,7 @@ app.get('/api/summarize', (req, res) => {
     }).then(()=>{
         //getting transcript
         YoutubeTranscript.fetchTranscript(video_id).then((subtitles) => {
+            console.log(subtitles)
             responseJson.found_transcript=true;
             return subtitles.map((subtitle_entry)=> subtitle_entry.text).join(" ")
             }
