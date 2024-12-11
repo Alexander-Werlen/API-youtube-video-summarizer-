@@ -1,4 +1,4 @@
-# Youtube Video Summarizer
+# Youtube Video Summarizer (Discontinued since 11/12/2024)
 
 This project uses **YouTube Data API** to get the full transcript of the video. Then it employs **OpenAI API** to make a summary of the transcript with the *gpt-3.5-turbo* language model. For a given video, it will summarize all its content into approximatelly 100 words.
 
